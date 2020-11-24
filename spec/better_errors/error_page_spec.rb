@@ -480,5 +480,34 @@ module BetterErrors
         end
       end
     end
+
+    describe 'do_expand' do
+      context 'requesting more lines of code in the upper direction' do
+        subject(:do_expand) { error_page.do_expand('index' => 0, 'direction' => 'up') }
+        it 'should' do
+          html = do_expand[:html]
+          expect(html).to include("<span class=\"\">    1</span>")
+          expect(html).to include("<span class=\"\">   10</span>")
+          expect(html).to_not include("<span class=\"\">   15</span>")
+        end
+      end
+      context 'requesting one time more lines of code in the lower direction' do
+        it 'should returns the codes from line 1 until line 15' do
+          html = error_page.do_expand('index' => 0, 'direction' => 'down')[:html]
+          expect(html).to include("<span class=\"\">    1</span>")
+          expect(html).to include("<span class=\"\">   15</span>")
+          expect(html).to_not include("<span class=\"\">   16</span>")
+        end
+      end
+      context 'requesting two times more lines of code in the lower direction' do
+        it 'should returns the codes from line 1 until line 20' do
+          error_page.do_expand('index' => 0, 'direction' => 'down')
+          html = error_page.do_expand('index' => 0, 'direction' => 'down')[:html]
+          expect(html).to include("<span class=\"\">    1</span>")
+          expect(html).to include("<span class=\"\">   20</span>")
+          expect(html).to_not include("<span class=\"\">   21</span>")
+        end
+      end
+    end
   end
 end

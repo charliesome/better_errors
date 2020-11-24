@@ -482,9 +482,21 @@
         float:left;
     }
 
+    .code_block span.expander {
+      display: block;
+      padding: 0 12px;
+      height: 23px;
+    }
+
     .code_linenums span{
         display:block;
         padding:0 12px;
+    }
+
+    .code_block span.expander a {
+      position: relative;
+      top: 3px;
+      margin-bottom: 2px;
     }
 
     .code {
@@ -983,6 +995,33 @@
         if (replInput) replInput.focus();
     }
 
+    function connectExpanders() {
+      var allExpanders = document.querySelectorAll(".expander a");
+      var selectedFrame = document.querySelector("ul.frames li.selected");
+
+      for(var i = 0; i < allExpanders.length; i++) {
+        (function(i, el) {
+          var el = allExpanders[i];
+          el.onclick = function() {
+            var direction = el.getAttribute("data-direction");
+            var index = selectedFrame.getAttribute("data-index");
+            apiCall("expand", { "direction": direction, "index": index }, function(response) {
+                if(response.error) {
+                    el.innerHTML = "<h2 class='error'>" + escapeHTML(response.error) + "</h2>";
+                    if(response.explanation) {
+                      el.innerHTML += "<p class='explanation'>" + escapeHTML(response.explanation) + "</p>";
+                    }
+                    el.innerHTML += "<p><a target='_new' href='https://github.com/charliesome/better_errors'>More about Better Errors</a></p>";
+                } else {
+                  document.querySelector(".code_block").innerHTML = response.html;
+                  connectExpanders();
+                }
+            });
+          }
+        })(i);
+      }
+    }
+
     function selectFrameInfo(index) {
         var el = allFrameInfos[index];
         if(el) {
@@ -1000,6 +1039,8 @@
                     el.innerHTML += "<p><a target='_new' href='https://github.com/BetterErrors/better_errors'>More about Better Errors</a></p>";
                 } else {
                     el.innerHTML = response.html;
+
+                    connectExpanders();
 
                     var repl = el.querySelector(".be-repl .be-console");
                     if(repl) {

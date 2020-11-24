@@ -12,12 +12,16 @@ module BetterErrors
       ".haml" => :haml
     }
 
-    attr_reader :filename, :line, :context
+    attr_reader :filename, :line, :upperlines, :lowerlines
 
-    def initialize(filename, line, context = 5)
-      @filename = filename
-      @line     = line
-      @context  = context
+    def initialize(filename, line, upperlines = nil, lowerlines = nil)
+      @filename   = filename
+      @line       = line
+      @upperlines = upperlines || line - 5
+      @lowerlines = lowerlines || line + 5
+
+      @upperlines = 1 if begin_of_file_reached?
+      @lowerlines = source_lines_count if end_of_file_reached?
     end
 
     def output
@@ -55,9 +59,21 @@ module BetterErrors
     end
 
     def line_range
-      min = [line - context, 1].max
-      max = [line + context, source_lines.count].min
-      min..max
+      upperlines..lowerlines
+    end
+
+    def begin_of_file_reached?
+      upperlines <= 1
+    end
+
+    def source_lines_count
+      @source_lines_count ||= source_lines.count
+    rescue Errno::ENOENT
+      0
+    end
+
+    def end_of_file_reached?
+      lowerlines >= source_lines_count
     end
   end
 end

@@ -8,12 +8,15 @@ module BetterErrors
     end
 
     attr_reader :filename, :line, :name, :frame_binding
+    attr_accessor :upperlines, :lowerlines
 
-    def initialize(filename, line, name, frame_binding = nil)
+    def initialize(filename, line, name, frame_binding = nil, upperlines = nil, lowerlines = nil)
       @filename       = filename
       @line           = line
       @name           = name
       @frame_binding  = frame_binding
+      @upperlines     = upperlines || line - 5
+      @lowerlines     = lowerlines || line + 5
 
       set_pretty_method_name if frame_binding
     end
