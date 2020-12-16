@@ -23,7 +23,7 @@ jobs:
           - 2.6
           - 2.7
           # - ruby-head
-          # - truffleruby-head
+          - truffleruby-head
         gemfile:
           # These are located in the gemfiles/ folder
           - rails42
@@ -86,11 +86,14 @@ jobs:
           # - { ruby: ruby-head,        gemfile: rails42 }
           # - { ruby: ruby-head,        gemfile: rails42_boc }
           # - { ruby: ruby-head,        gemfile: rails42_haml }
+          - { ruby: truffleruby-head, gemfile: rails42 }
           - { ruby: truffleruby-head, gemfile: rails42_boc }
+          - { ruby: truffleruby-head, gemfile: rails42_haml }
           - { ruby: truffleruby-head, gemfile: rails50_boc }
           - { ruby: truffleruby-head, gemfile: rails51_boc }
           - { ruby: truffleruby-head, gemfile: rails52_boc }
           - { ruby: truffleruby-head, gemfile: rails60_boc }
+          - { ruby: truffleruby-head, gemfile: rails61_boc }
           - { ruby: truffleruby-head, gemfile: rack_boc }
 
     steps:
@@ -101,6 +104,9 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
+
+    - run: sudo apt-get -yqq install libxml2-dev libxslt-dev
+      if: startsWith(matrix.ruby, 'truffleruby')
 
     - uses: actions/cache@v2
       with:
