@@ -43,7 +43,8 @@ module BetterErrors
         @input = BetterErrors::REPL::Pry::Input.new
         @output = BetterErrors::REPL::Pry::Output.new
         @pry = ::Pry.new input: @input, output: @output
-        @pry.hooks.clear_all if defined?(@pry.hooks.clear_all)
+        @pry.hooks.clear_event_hooks(:before_session) if @pry.hooks.respond_to?(:clear_event_hooks) # pry version >= 0.11.x
+        @pry.hooks.clear_all if @pry.hooks.respond_to?(:clear_all) # pry version <= 0.10.x
         store_last_exception exception
         @fiber.resume
       end
