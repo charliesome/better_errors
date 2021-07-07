@@ -42,6 +42,14 @@ module BetterErrors
 
     CSRF_TOKEN_COOKIE_NAME = "BetterErrors-#{BetterErrors::VERSION}-CSRF-Token"
 
+    def self.internal_url_prefix
+      @internal_url_prefix || ""
+    end
+
+    def self.internal_url_prefix=(value)
+      @internal_url_prefix = value
+    end
+
     # A new instance of BetterErrors::Middleware
     #
     # @param app      The Rack app/middleware to wrap with Better Errors

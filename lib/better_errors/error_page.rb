@@ -120,7 +120,7 @@ module BetterErrors
     end
 
     def uri_prefix
-      env["SCRIPT_NAME"] || ""
+      BetterErrors::Middleware.internal_url_prefix + (env["SCRIPT_NAME"] || "")
     end
 
     def request_path
