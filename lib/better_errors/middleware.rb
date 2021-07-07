@@ -5,6 +5,16 @@ require "set"
 require "rack"
 
 module BetterErrors
+  def self.set_last_error(error)
+    @last_error = error
+  end
+
+  def self.take_last_error
+    error = @last_error
+    @last_error = nil
+    error
+  end
+
   # Better Errors' error handling middleware. Including this in your middleware
   # stack will show a Better Errors error page for exceptions raised below this
   # middleware.
@@ -84,7 +94,14 @@ module BetterErrors
     end
 
     def protected_app_call(env)
-      @app.call env
+      @app.call(env).tap do
+        error = BetterErrors.take_last_error
+        if error
+          @error_page = @handler.new error, env
+          log_exception
+        end
+      end
+
     rescue Exception => ex
       @error_page = @handler.new ex, env
       log_exception
