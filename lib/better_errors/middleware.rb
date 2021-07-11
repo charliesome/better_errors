@@ -68,7 +68,7 @@ module BetterErrors
     def allow_ip?(env)
       request = Rack::Request.new(env)
       return true unless request.ip and !request.ip.strip.empty?
-      ip = IPAddr.new request.ip.split("%").first
+      ip = IPAddr.new request.ip.split("%").first rescue "127.0.0.1"
       ALLOWED_IPS.any? { |subnet| subnet.include? ip }
     end
 
