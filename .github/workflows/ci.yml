@@ -22,7 +22,7 @@ jobs:
           - 2.5
           - 2.6
           - 2.7
-          # - ruby-head
+          - 3.0.0-preview1
           # - truffleruby-head
         gemfile:
           # These are located in the gemfiles/ folder
@@ -50,6 +50,8 @@ jobs:
           # - pry10
           # - pry11
         exclude:
+          # Following https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html
+          # to decide what to include.
           - { ruby: 2.2,              gemfile: rails60 }
           - { ruby: 2.2,              gemfile: rails60_boc }
           - { ruby: 2.2,              gemfile: rails60_haml }
@@ -77,21 +79,60 @@ jobs:
           - { ruby: 2.5,              gemfile: rails42 }
           - { ruby: 2.5,              gemfile: rails42_boc }
           - { ruby: 2.5,              gemfile: rails42_haml }
+          - { ruby: 2.5,              gemfile: rails50 }
+          - { ruby: 2.5,              gemfile: rails50_boc }
+          - { ruby: 2.5,              gemfile: rails50_haml }
           - { ruby: 2.6,              gemfile: rails42 }
           - { ruby: 2.6,              gemfile: rails42_boc }
           - { ruby: 2.6,              gemfile: rails42_haml }
+          - { ruby: 2.6,              gemfile: rails50 }
+          - { ruby: 2.6,              gemfile: rails50_boc }
+          - { ruby: 2.6,              gemfile: rails50_haml }
+          - { ruby: 2.6,              gemfile: rails51 }
+          - { ruby: 2.6,              gemfile: rails51_boc }
+          - { ruby: 2.6,              gemfile: rails51_haml }
+          - { ruby: 2.6,              gemfile: rails52 }
+          - { ruby: 2.6,              gemfile: rails52_boc }
+          - { ruby: 2.6,              gemfile: rails52_haml }
+          - { ruby: 2.6,              gemfile: rails60 }
+          - { ruby: 2.6,              gemfile: rails60_boc }
+          - { ruby: 2.6,              gemfile: rails60_haml }
           - { ruby: 2.7,              gemfile: rails42 }
           - { ruby: 2.7,              gemfile: rails42_boc }
           - { ruby: 2.7,              gemfile: rails42_haml }
-          # - { ruby: ruby-head,        gemfile: rails42 }
-          # - { ruby: ruby-head,        gemfile: rails42_boc }
-          # - { ruby: ruby-head,        gemfile: rails42_haml }
-          - { ruby: truffleruby-head, gemfile: rails42_boc }
-          - { ruby: truffleruby-head, gemfile: rails50_boc }
-          - { ruby: truffleruby-head, gemfile: rails51_boc }
-          - { ruby: truffleruby-head, gemfile: rails52_boc }
-          - { ruby: truffleruby-head, gemfile: rails60_boc }
-          - { ruby: truffleruby-head, gemfile: rack_boc }
+          - { ruby: 2.7,              gemfile: rails50 }
+          - { ruby: 2.7,              gemfile: rails50_boc }
+          - { ruby: 2.7,              gemfile: rails50_haml }
+          - { ruby: 2.7,              gemfile: rails51 }
+          - { ruby: 2.7,              gemfile: rails51_boc }
+          - { ruby: 2.7,              gemfile: rails51_haml }
+          - { ruby: 2.7,              gemfile: rails52 }
+          - { ruby: 2.7,              gemfile: rails52_boc }
+          - { ruby: 2.7,              gemfile: rails52_haml }
+          - { ruby: 2.7,              gemfile: rails60 }
+          - { ruby: 2.7,              gemfile: rails60_boc }
+          - { ruby: 2.7,              gemfile: rails60_haml }
+          - { ruby: 3.0.0-preview1,   gemfile: rails42 }
+          - { ruby: 3.0.0-preview1,   gemfile: rails42_boc }
+          - { ruby: 3.0.0-preview1,   gemfile: rails42_haml }
+          - { ruby: 3.0.0-preview1,   gemfile: rails50 }
+          - { ruby: 3.0.0-preview1,   gemfile: rails50_boc }
+          - { ruby: 3.0.0-preview1,   gemfile: rails50_haml }
+          - { ruby: 3.0.0-preview1,   gemfile: rails51 }
+          - { ruby: 3.0.0-preview1,   gemfile: rails51_boc }
+          - { ruby: 3.0.0-preview1,   gemfile: rails51_haml }
+          - { ruby: 3.0.0-preview1,   gemfile: rails52 }
+          - { ruby: 3.0.0-preview1,   gemfile: rails52_boc }
+          - { ruby: 3.0.0-preview1,   gemfile: rails52_haml }
+          - { ruby: 3.0.0-preview1,   gemfile: rails60 }
+          - { ruby: 3.0.0-preview1,   gemfile: rails60_boc }
+          - { ruby: 3.0.0-preview1,   gemfile: rails60_haml }
+          # - { ruby: truffleruby-head, gemfile: rails42_boc }
+          # - { ruby: truffleruby-head, gemfile: rails50_boc }
+          # - { ruby: truffleruby-head, gemfile: rails51_boc }
+          # - { ruby: truffleruby-head, gemfile: rails52_boc }
+          # - { ruby: truffleruby-head, gemfile: rails60_boc }
+          # - { ruby: truffleruby-head, gemfile: rack_boc }
 
     steps:
 
